@@ -33,6 +33,7 @@ class << AsyncObserver::Queue
 
   # This is a fake worker instance for running jobs synchronously.
   def sync_worker()
+    require 'async_observer/worker'
     @sync_worker ||= AsyncObserver::Worker.new(binding)
   end
 
