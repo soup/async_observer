@@ -37,12 +37,12 @@ need to install that:</p>
 project:</p>
 
 <pre>
-$ ./script/plugin install git://github.com/kristjan/async-observer.git
+$ ./script/plugin install git://github.com/kristjan/async_observer.git
 </pre>
 
 <h2>How to use it</h2>
 
-<p>If you don't define a queue, async-observer will just run things
+<p>If you don't define a queue, async_observer will just run things
 synchronously in-process. But assuming you want asynchrony, first you must put
 some lines into <code>config/environments/*.rb</code>:</p>
 
@@ -109,7 +109,7 @@ end
 
 <p>One caveat: the arguments to and receiver of an asynchronous call must be
 instances of one of the following list of types (see <a
-    href=http://github.com/kristjan/async-observer/tree/master/lib/async_observer/extend.rb><code>async_observer/lib/async_observer/queue.rb</code></a>
+    href=http://github.com/kristjan/async_observer/tree/master/lib/async_observer/extend.rb><code>async_observer/lib/async_observer/queue.rb</code></a>
 for details): Symbol, Module, NilClass, FalseClass, TrueClass, Numeric, String,
 Array, Hash, or ActiveRecord::Base.</p>
 
@@ -157,8 +157,8 @@ to this:</p>
 
 <h3>Custom jobs</h3>
 
-<p>If you want to submit custom jobs that async-observer doesn't know how to
-process, you must teach async-observer how to handle them:</p>
+<p>If you want to submit custom jobs that async_observer doesn't know how to
+process, you must teach async_observer how to handle them:</p>
 
 <pre>
 config.after_initialize do
@@ -203,7 +203,7 @@ libraries.</p>
 <p>Read the <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/">8 steps for fixing other people&#8217;s code</a> and for section <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/#8b-google-groups">8b: Submit patch to Google Groups</a>, use the Google Group above.</p>
 
 <p>The repository can be found at
-<a href=http://github.com/kristjan/async-observer>http://github.com/kristjan/async-observer</a>.</p>
+<a href=http://github.com/kristjan/async_observer>http://github.com/kristjan/async_observer</a>.</p>
 
 
 <h2>License</h2>
