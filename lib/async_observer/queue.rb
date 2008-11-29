@@ -18,11 +18,19 @@
 
 require 'beanstalk-client'
 
-module AsyncObserver; end
+module AsyncObserver
+  def self.logger
+    @logger ||= RAILS_DEFAULT_LOGGER
+  end
+  def self.logger=(the_logger)
+    @logger = the_logger
+  end
+end
 
 class AsyncObserver::Queue; end
 
 class << AsyncObserver::Queue
+  include AsyncObserver::Util
   DEFAULT_PRI = 512
   DEFAULT_FUZZ = 0
   DEFAULT_DELAY = 0
@@ -70,7 +78,7 @@ class << AsyncObserver::Queue
     pri = pri + rand(fuzz + 1) if !:direct.equal?(pri)
 
     code = gen(obj, sel, args)
-    RAILS_DEFAULT_LOGGER.info("put #{pri} #{code}")
+    logger.info("put #{pri} #{code}")
     put!(pkg(code, worker_opts), pri, delay, ttr, tube)
   end
 

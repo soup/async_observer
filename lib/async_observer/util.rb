@@ -20,12 +20,16 @@ require 'open3'
 
 module AsyncObserver; end
 module AsyncObserver::Util
+  def logger
+    AsyncObserver::logger
+  end
+	
   def log_bracketed(name)
     begin
-      RAILS_DEFAULT_LOGGER.info "#!#{name}!begin!#{Time.now.utc.xmlschema(6)}"
+      logger.info "#!#{name}!begin!#{Time.now.utc.xmlschema(6)}"
       yield()
     ensure
-      RAILS_DEFAULT_LOGGER.info "#!#{name}!end!#{Time.now.utc.xmlschema(6)}"
+      logger.info "#!#{name}!end!#{Time.now.utc.xmlschema(6)}"
     end
   end
 end
