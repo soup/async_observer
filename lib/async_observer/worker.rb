@@ -162,11 +162,6 @@ class AsyncObserver::Worker
   def safe_dispatch(job)
     log_bracketed('worker-dispatch') do
       RAILS_DEFAULT_LOGGER.info "got #{job.inspect}:\n" + job.body
-      log_bracketed('job-stats') do
-        job.stats.each do |k,v|
-          RAILS_DEFAULT_LOGGER.info "#{k}=#{v}"
-        end
-      end
       begin
         return dispatch(job)
       rescue Interrupt => ex
