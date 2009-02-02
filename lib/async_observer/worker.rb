@@ -116,10 +116,12 @@ class AsyncObserver::Worker
   # connection as long as it stays fast. Otherwise, have no preference.
   def reserve_and_set_hint()
     t1 = Time.now.utc
+    $0 = "worker [reserving @#{t1.iso8601}]"
     return job = q_hint().reserve()
   ensure
     t2 = Time.now.utc
     @q_hint = if brief?(t1, t2) and job then job.conn else nil end
+    $0 = "worker [handling job ##{job ? job.id : 'nothing'} @#{t2.iso8601}]"
   end
 
   def brief?(t1, t2)
