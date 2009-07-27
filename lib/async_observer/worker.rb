@@ -114,10 +114,11 @@ class AsyncObserver::Worker
   # if the connection returns a job right away, it probably has more available.
   # But if it takes time, then it's probably empty. So reuse the same
   # connection as long as it stays fast. Otherwise, have no preference.
-  def reserve_and_set_hint()
+  def reserve_and_set_hint(tube = nil, timeout = nil)
     t1 = Time.now.utc
     $0 = "worker [reserving @#{t1.iso8601}]"
-    return job = q_hint().reserve()
+    q_hint().use(tube) if tube
+    return job = q_hint().reserve(timeout)
   ensure
     t2 = Time.now.utc
     @q_hint = if brief?(t1, t2) and job then job.conn else nil end
@@ -128,13 +129,13 @@ class AsyncObserver::Worker
     ((t2 - t1) * 100).to_i.abs < 10
   end
 
-  def get_job()
+  def get_job(tube = nil, timeout = nil)
     log_bracketed('worker-get-job') do
       loop do
         begin
           AsyncObserver::Queue.queue.connect()
           self.class.run_before_reserve
-          return reserve_and_set_hint()
+          return reserve_and_set_hint(tube, timeout)
         rescue Interrupt => ex
           raise ex
         rescue SignalException => ex
